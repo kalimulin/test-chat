@@ -40,14 +40,14 @@ export default new Vuex.Store({
         message: msg.message,
         fromId: msg.fromId,
         toId: msg.toId,
-        isRead: false
+        isRead: (msg.toId === msg.toId)
       })
     }
   },
   getters: {
     getDialogMessages(state) {
       return (id1: number, id2: number) => {
-        return state.messages.filter(message => (message.fromId === id1 || message.fromId === id2) && (message.toId === id1 || message.toId === id2))
+        return state.messages.filter(message => (message.fromId === id1 && message.toId === id2) || (message.toId === id1 && message.fromId === id2))
       }
     },
   },

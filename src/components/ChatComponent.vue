@@ -14,7 +14,10 @@
              :key="contact.id"
              :class="contact.id === currentContact.id ? 'chat__contacts-item_active' : ''"
              @click="selectContact(contact)"
-        >{{contact.nickName}}</div>
+        >
+          <span>{{contact.nickName}}</span>
+          <span class="chat__messages-count"></span>
+        </div>
       </div>
     </div>
     <Dialog v-if="currentContact && currentContact.nickName"
@@ -96,8 +99,23 @@
     margin 0 -5px
     padding 0 5px
     cursor pointer
+    position relative
     &:hover
       background-color lightgray
     &_active
       background-color lightblue
+  &__messages-count
+    display none /* пока не придумал, как правильно извлекать значения */
+    position absolute
+    color white
+    right 2px
+    top 7px
+    height 10px
+    width 10px
+    border-radius 10px
+    background-color orange
+    font-size 14px
+    font-weight bold
+    text-align center
+    line-height 20px
 </style>

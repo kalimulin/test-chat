@@ -7,12 +7,16 @@
       <div class="dialog__contact-name">{{contact.nickName}}</div>
       <div class="dialog__close"><a href="#" @click.prevent="$emit('close')">Закрыть</a></div>
     </div>
-    <div class="dialog__messages">
-      <div class="dialog__message" v-for="msg in dialogMessages" :key="msg.timestamp">{{msg.message}}</div>
+    <div class="dialog__messages" ref="messages">
+      <div class="dialog__message"
+           v-for="msg in dialogMessages"
+           :class="msg.toId === user.id ? 'dialog__message_own' : ''"
+           :key="msg.timestamp"
+      >{{msg.message}}</div>
     </div>
     <div class="dialog__textarea">
       <textarea rows="10" placeholder="type message here" v-model="textareaMessage"></textarea>
-      <button type="button" @click.prevent="sendMessage">Send</button>
+      <button :disabled="!textareaMessage.trim()" type="button" @click.prevent="sendMessage">Send</button>
     </div>
   </div>
 
@@ -21,7 +25,7 @@
 <script lang="ts">
 import Vue from 'vue'
 
-export default Vue.extend ({
+export default Vue.extend({
   name: "DialogComponent",
   props: {
     contact: Object,
@@ -38,6 +42,7 @@ export default Vue.extend ({
         toId: this.contact.id
       })
       this.textareaMessage = ''
+      this.$refs.messages.scrollTo(9999999,99999999)
     }
   },
   watch: {
@@ -49,7 +54,18 @@ export default Vue.extend ({
     dialogMessages() {
       return this.$store.getters.getDialogMessages(this.user.id, this.contact.id)
     }
-  }
+  },
+  created() {
+    this.unwatch = this.$store.watch(
+      (state, getters) => getters.getDialogMessages(this.user.id, this.contact.id),
+      (newValue, oldValue) => {
+        this.$refs.messages.scrollTo(9999999,99999999)
+      },
+    );
+  },
+  beforeDestroy() {
+    this.unwatch();
+  },
 })
 </script>
 
@@ -90,6 +106,21 @@ export default Vue.extend ({
       margin-left 5px
       margin-top 5px
       border 1px solid lightgray
+    &__message
+      width 70%
+      margin-left auto
+      margin-right 5px
+      min-height 30px
+      line-height 30px
+      background-color rgba(128, 128, 128, 0.33)
+      border-radius 5px
+      border 1px solid lightgray
+      padding 5px
+      margin-top 5px
+      &_own
+        margin-right auto
+        margin-left 5px
+        background-color rgba(173, 216, 230, 0.7)
     &__textarea
       textarea
         width calc(100% - 5px)
