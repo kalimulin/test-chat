@@ -7,12 +7,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user1: {
-      nickname: '',
+      nickName: '',
       avatarUrl: '',
       id: 1
     } as User,
     user0: {
-      nickname: 'Иван Иванович',
+      nickName: 'Иван Иванович',
       avatarUrl: 'https://robohash.org/IvanIvanovich?set=set4',
       id: 0
     } as User,
@@ -22,7 +22,7 @@ export default new Vuex.Store({
     setUser: (state, user) => {
       state.user1 = {
         id: state.user1.id,
-        nickname: user.nickname,
+        nickName: user.nickName,
         avatarUrl: user.avatarSrc
       }
     },

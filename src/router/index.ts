@@ -11,9 +11,9 @@ Vue.use(VueRouter)
     component: Login
   },
   {
-    path: '/chat',
-    name: 'Chat',
-    component: () => import('@/views/Chat.vue')
+    path: '/chats',
+    name: 'Chats',
+    component: () => import('@/views/Chats.vue')
   }
 ]
 

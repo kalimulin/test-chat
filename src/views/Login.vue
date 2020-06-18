@@ -6,7 +6,7 @@
       <form @submit.prevent="formSubmit" class="login-page__form">
         <div class="login-page__form-group">
           <label>Никнейм</label>
-          <input type="text" v-model="nickname">
+          <input type="text" v-model="nickName">
         </div>
         <div class="login-page__form-group">
           <label>URL</label>
@@ -16,20 +16,20 @@
         <div class="login-page__avatar-select">
           <div class="login-page__generate-avatar">
             <p>сгенерировать аватар из никнейма</p>
-            <button type="button" :disabled="!nickname.trim()" @click.prevent="generateAvatar(1)">Сгенерировать робота</button>
-            <button type="button" :disabled="!nickname.trim()" @click.prevent="generateAvatar(2)">Сгенерировать монстра
+            <button type="button" :disabled="!nickName.trim()" @click.prevent="generateAvatar(1)">Сгенерировать робота</button>
+            <button type="button" :disabled="!nickName.trim()" @click.prevent="generateAvatar(2)">Сгенерировать монстра
             </button>
-            <button type="button" :disabled="!nickname.trim()" @click.prevent="generateAvatar(3)">Сгенерировать робота без
+            <button type="button" :disabled="!nickName.trim()" @click.prevent="generateAvatar(3)">Сгенерировать робота без
               тела
             </button>
-            <button type="button" :disabled="!nickname.trim()" @click.prevent="generateAvatar(4)">Сгенерировать котика</button>
+            <button type="button" :disabled="!nickName.trim()" @click.prevent="generateAvatar(4)">Сгенерировать котика</button>
           </div>
           <div class="login-page__avatar-img">
             <img :src="avatarSrc" alt="">
           </div>
         </div>
         <hr>
-        <button type="submit" :disabled="!nickname.trim() || !avatarSrc.trim()">ВОЙТИ</button>
+        <button type="submit" :disabled="!nickName.trim() || !avatarSrc.trim()">ВОЙТИ</button>
       </form>
     </div>
   </div>
@@ -41,21 +41,21 @@
   export default Vue.extend({
     name: 'Login',
     data: () => ({
-      nickname: '',
+      nickName: '',
       avatarUrl: '',
       avatarSrc: ''
     }),
     methods: {
       formSubmit(): void {
-        console.log('form submit', this.nickname, this.avatarSrc)
-        this.$store.commit('setUser', {nickName: this.nickname, avatarSrc: this.avatarSrc})
-        this.$router.push('/chat')
+        console.log('form submit', this.nickName, this.avatarSrc)
+        this.$store.commit('setUser', {nickName: this.nickName, avatarSrc: this.avatarSrc})
+        this.$router.push('/chats')
       },
       setAvatar(): void {
         this.avatarSrc = encodeURIComponent(this.avatarUrl.trim())
       },
       generateAvatar(set = 4): void {
-        this.avatarSrc = `https://robohash.org/${encodeURIComponent(this.nickname)}?set=set${set}`.trim()
+        this.avatarSrc = `https://robohash.org/${encodeURIComponent(this.nickName)}?set=set${set}`.trim()
         this.avatarUrl = this.avatarSrc
       }
     }
