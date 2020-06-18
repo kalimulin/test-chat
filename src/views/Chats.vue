@@ -38,7 +38,7 @@
     height 100%
 
     &__chat-container
-      width 50%
+      width calc(50% - 2px)
       padding 0 5px
       height 100%
 

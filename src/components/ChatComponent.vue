@@ -17,6 +17,8 @@
         >{{contact.nickName}}</div>
       </div>
     </div>
+    <Dialog v-if="currentContact && currentContact.nickName" :contact="currentContact" />
+    <div v-else style="align-self: center; text-align: center; font-weight: bold; width: 100%">Выберите контакт</div>
   </div>
 </template>
 
@@ -24,11 +26,15 @@
   import Vue from 'vue'
   import {mapState} from "vuex";
   import {User} from "@/interfaces";
+  import DialogComponent from "@/components/DialogComponent.vue";
 
   export default Vue.extend({
     name: 'ChatComponent',
     props: {
       user: Object
+    },
+    components: {
+      Dialog: DialogComponent
     },
     data: () => ({
       currentContact: {} as User
