@@ -4,19 +4,24 @@ import {Message, User} from "@/interfaces";
 
 Vue.use(Vuex)
 
+const user0: User = {
+  nickName: 'Иван Иванович',
+  avatarUrl: 'https://robohash.org/IvanIvanovich?set=set4',
+  id: 0
+}
+
+const user1: User = {
+  nickName: '',
+  avatarUrl: '',
+  id: 1
+}
+
 export default new Vuex.Store({
   state: {
-    user1: {
-      nickName: '',
-      avatarUrl: '',
-      id: 1
-    } as User,
-    user0: {
-      nickName: 'Иван Иванович',
-      avatarUrl: 'https://robohash.org/IvanIvanovich?set=set4',
-      id: 0
-    } as User,
-    messages: Array<Message>()
+    user1,
+    user0,
+    messages: Array<Message>(),
+    contacts: [user0, user1]
   },
   mutations: {
     setUser: (state, user) => {
@@ -25,6 +30,9 @@ export default new Vuex.Store({
         nickName: user.nickName,
         avatarUrl: user.avatarSrc
       }
+    },
+    setContacts: (state, contacts) => {
+      state.contacts = [...contacts]
     },
     addMessage: (state, msg)  => {
       state.messages.push({
@@ -40,6 +48,12 @@ export default new Vuex.Store({
       return (id: number) => {
         return state.messages.filter(message => (message.fromId === id || message.toId === id))
       }
-    }
+    },
   },
+  actions: {
+    updateUser: ({commit, state}, user) => {
+      commit('setUser', user)
+      commit('setContacts', [state.user0, state.user1])
+    }
+  }
 })

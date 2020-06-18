@@ -48,7 +48,7 @@
     methods: {
       formSubmit(): void {
         console.log('form submit', this.nickName, this.avatarSrc)
-        this.$store.commit('setUser', {nickName: this.nickName, avatarSrc: this.avatarSrc})
+        this.$store.dispatch('updateUser', {nickName: this.nickName, avatarSrc: this.avatarSrc})
         this.$router.push('/chats')
       },
       setAvatar(): void {

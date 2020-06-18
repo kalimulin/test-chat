@@ -19,6 +19,9 @@
     data: () => ({}),
     computed: {
       ...mapState(['user0', 'user1']),
+      contacts() {
+        return [this.user0, this.user1]
+      }
     },
     components: {
       Chat: ChatComponent
