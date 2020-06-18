@@ -17,7 +17,10 @@
         >{{contact.nickName}}</div>
       </div>
     </div>
-    <Dialog v-if="currentContact && currentContact.nickName" :contact="currentContact" />
+    <Dialog v-if="currentContact && currentContact.nickName"
+            :contact="currentContact"
+            :user="user"
+            @close="currentContact = {}" />
     <div v-else style="align-self: center; text-align: center; font-weight: bold; width: 100%">Выберите контакт</div>
   </div>
 </template>

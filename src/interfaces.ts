@@ -8,5 +8,6 @@ export interface Message {
     message: string,
     timestamp: number,
     fromId: number,
-    toId: number
+    toId: number,
+    isRead: boolean
 }

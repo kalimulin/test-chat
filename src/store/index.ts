@@ -39,14 +39,15 @@ export default new Vuex.Store({
         timestamp: Date.now(),
         message: msg.message,
         fromId: msg.fromId,
-        toId: msg.toId
+        toId: msg.toId,
+        isRead: false
       })
     }
   },
   getters: {
-    getMessagesByUser(state) {
-      return (id: number) => {
-        return state.messages.filter(message => (message.fromId === id || message.toId === id))
+    getDialogMessages(state) {
+      return (id1: number, id2: number) => {
+        return state.messages.filter(message => (message.fromId === id1 || message.fromId === id2) && (message.toId === id1 || message.toId === id2))
       }
     },
   },

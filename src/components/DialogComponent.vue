@@ -7,7 +7,9 @@
       <div class="dialog__contact-name">{{contact.nickName}}</div>
       <div class="dialog__close"><a href="#" @click.prevent="$emit('close')">Закрыть</a></div>
     </div>
-    <div class="dialog__messages"></div>
+    <div class="dialog__messages">
+      <div class="dialog__message" v-for="msg in dialogMessages" :key="msg.timestamp">{{msg.message}}</div>
+    </div>
     <div class="dialog__textarea">
       <textarea rows="10" placeholder="type message here" v-model="textareaMessage"></textarea>
       <button type="button" @click.prevent="sendMessage">Send</button>
@@ -22,14 +24,30 @@ import Vue from 'vue'
 export default Vue.extend ({
   name: "DialogComponent",
   props: {
-    contact: Object
+    contact: Object,
+    user: Object
   },
   data: () => ({
     textareaMessage: ''
   }),
   methods: {
     sendMessage() {
-      console.log(this.textareaMessage)
+      this.$store.commit('addMessage', {
+        message: this.textareaMessage,
+        fromId: this.user.id,
+        toId: this.contact.id
+      })
+      this.textareaMessage = ''
+    }
+  },
+  watch: {
+    contact() {
+      this.textareaMessage = ''
+    }
+  },
+  computed: {
+    dialogMessages() {
+      return this.$store.getters.getDialogMessages(this.user.id, this.contact.id)
     }
   }
 })
