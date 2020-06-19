@@ -20,11 +20,12 @@
         </div>
       </div>
     </div>
-    <Dialog v-if="currentContact && currentContact.nickName"
-            :contact="currentContact"
-            :user="user"
-            @close="currentContact = {}" />
-    <div v-else style="align-self: center; text-align: center; font-weight: bold; width: 100%">Выберите контакт</div>
+    <div class="chat__dialog-container" v-if="currentContact && currentContact.nickName">
+      <Dialog :contact="currentContact"
+              :user="user"
+              @close="currentContact = {}" />
+    </div>
+
   </div>
 </template>
 
@@ -118,4 +119,25 @@
     font-weight bold
     text-align center
     line-height 20px
+  &__dialog-container
+    width 100%
+
+@media screen and (max-width: 1200px)
+  .chat
+    position relative
+    &__sidebar
+      position absolute
+      width 100%
+      top 0
+      left 0
+      z-index 1
+    &__dialog-container
+      position absolute
+      width calc(100% + 7px)
+      top 0
+      left -5px
+      z-index 2
+      height 100%
+    &__contacts-item
+      margin 0 2px
 </style>

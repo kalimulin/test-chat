@@ -22,7 +22,7 @@
 
 </template>
 
-<script lang="ts">
+<script>
 import Vue from 'vue'
 
 export default Vue.extend({
@@ -32,7 +32,8 @@ export default Vue.extend({
     user: Object
   },
   data: () => ({
-    textareaMessage: ''
+    textareaMessage: '',
+    unwatch: null
   }),
   methods: {
     sendMessage() {
@@ -58,7 +59,7 @@ export default Vue.extend({
   created() {
     this.unwatch = this.$store.watch(
       (state, getters) => getters.getDialogMessages(this.user.id, this.contact.id),
-      (newValue, oldValue) => {
+      () => {
         this.$refs.messages.scrollTo(9999999,99999999)
       },
     );
@@ -76,6 +77,7 @@ export default Vue.extend({
     display flex
     flex-direction column
     justify-content space-between
+    background-color white
     &__contact
       padding 5px
       display flex
